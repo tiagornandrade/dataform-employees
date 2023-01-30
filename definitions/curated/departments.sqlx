@@ -1,0 +1,10 @@
+config {
+  type: "table",
+  schema: "curated"
+}
+
+select
+  dept_no as num_dept
+  , dept_name as name_dept
+  , cast(updated as date) as insertion_date
+from ${ref({schema:"raw",name:"departments"})}

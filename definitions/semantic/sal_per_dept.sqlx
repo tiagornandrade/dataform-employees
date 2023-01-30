@@ -1,0 +1,21 @@
+config {
+  type: "table",
+  schema: "semantic"
+}
+
+WITH base AS (
+  SELECT 
+    dp.name_dept
+    , row_number() OVER (PARTITION BY dp.num_dept ORDER BY sa.salary) as row_qtd
+  FROM ${ref({schema:"curated",name:"employees"})} em
+  INNER JOIN ${ref({schema:"curated",name:"dept_emp"})} de on de.num_emp = em.num_emp
+  INNER JOIN ${ref({schema:"curated",name:"departments"})} dp on dp.num_dept = de.num_dept
+  INNER JOIN ${ref({schema:"curated",name:"salaries"})} sa on sa.num_emp = em.num_emp
+)
+
+SELECT
+  name_dept
+  , AVG(row_qtd) AS salary_per_dept
+FROM base
+GROUP BY name_dept
+ORDER BY name_dept ASC

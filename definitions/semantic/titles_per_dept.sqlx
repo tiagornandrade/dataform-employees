@@ -1,0 +1,21 @@
+config {
+  type: "table",
+  schema: "semantic"
+}
+
+WITH base AS (
+  SELECT 
+    ti.title
+    , row_number() OVER (PARTITION BY dp.num_dept ORDER BY ti.num_emp) as row_qtd
+  FROM ${ref({schema:"curated",name:"employees"})} em
+  INNER JOIN ${ref({schema:"curated",name:"dept_emp"})} de on de.num_emp = em.num_emp
+  INNER JOIN ${ref({schema:"curated",name:"departments"})} dp on dp.num_dept = de.num_dept
+  INNER JOIN ${ref({schema:"curated",name:"titles"})} ti on ti.num_emp = em.num_emp
+)
+
+SELECT
+  title
+  , SUM(row_qtd) AS titles_per_dept
+FROM base
+GROUP BY title
+ORDER BY title ASC

@@ -1,0 +1,7 @@
+config {
+  type: "declaration",
+  database: "yams-lab-nonprod",
+  schema: "raw",
+  name: "dept_manager",
+  description: "raw dept_manager table"
+}

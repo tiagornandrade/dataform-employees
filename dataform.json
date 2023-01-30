@@ -1,0 +1,8 @@
+{
+  "defaultSchema": "raw",
+  "assertionSchema": "dataform_assertions",
+  "warehouse": "bigquery",
+  "defaultDatabase": "yams-lab-nonprod",
+  "defaultLocation": "US"
+}
+    

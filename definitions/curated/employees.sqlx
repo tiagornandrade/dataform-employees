@@ -1,0 +1,14 @@
+config {
+  type: "table",
+  schema: "curated"
+}
+
+select
+  emp_no as num_emp
+  , birth_date
+  , first_name
+  , last_name
+  , gender
+  , hire_date as hired_at
+  , cast(updated as date) as insertion_date
+from ${ref({schema:"raw",name:"employees"})}
